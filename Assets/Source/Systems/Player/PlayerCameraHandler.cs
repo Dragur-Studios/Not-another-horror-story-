@@ -16,6 +16,7 @@ public class PlayerCameraHandler : MonoBehaviour
     private float pitch; // Vertical rotation
 
     [SerializeField] Transform trackingTarget;
+    [SerializeField] Transform headFollowTarget;
 
     [SerializeField] Transform sk_Standing;
     [SerializeField] Transform sk_Crouch;

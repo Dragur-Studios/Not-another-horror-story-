@@ -3,7 +3,6 @@ using System;
 using Unity.VisualScripting;
 using UnityEditor.Search;
 using UnityEngine;
-
 public class Player : MonoBehaviour
 {
     public Action<bool> OnCrouch;
@@ -18,12 +17,15 @@ public class Player : MonoBehaviour
     PlayerInteractionHandler interaction;
     PlayerInputReciever inputs;
 
+    
+
     public PlayerInventory Inventory { get => inventory; }
     public PlayerMovementResolver Movement { get => movement; } 
     public PlayerAnimationResolver Animator { get => anim; }
     public PlayerCameraHandler Camera { get => cam; }
     public PlayerInteractionHandler Interaction { get => interaction; } 
     public PlayerInputReciever Input { get => inputs; }
+
 
     public void SetCrouch(bool crouching) => OnCrouch?.Invoke(crouching);
     public void SetSprint(bool sprinting) => OnSprint?.Invoke(sprinting);

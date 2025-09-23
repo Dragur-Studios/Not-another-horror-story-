@@ -47,4 +47,9 @@ public class PlayerAnimationResolver : MonoBehaviour
         animator.SetFloat(VERTICAL_HASH, hv.y, animSmoothTime, Time.deltaTime);
         animator.SetBool(INPUT_DETECT_HASH, hv.sqrMagnitude > 0.01f);
     }
+
+    private void OnAnimatorMove()
+    {
+        
+    }
 }

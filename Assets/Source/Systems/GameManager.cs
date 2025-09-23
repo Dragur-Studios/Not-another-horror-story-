@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+
     public static GameManager Singleton;
 
     public GameObject Player_prefab;
@@ -10,6 +11,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        Screen.SetResolution(1920, 1080, FullScreenMode.FullScreenWindow, new RefreshRate { numerator = 144, denominator = 1 });
+
         if (Singleton != null && Singleton != this)
         {
             Destroy(gameObject);
