@@ -3,11 +3,13 @@ using UnityEngine;
 public class PlayerInteractionHandler : MonoBehaviour
 {
     [SerializeField] private float interactRange = 3f;
-    [SerializeField] private LayerMask interactableMask; // Assign "Interactable" layer in Inspector
+    [SerializeField] private float interactThreshold = 0.2f;
+    [SerializeField] private LayerMask interactableMask; 
 
     private Camera mainCam;
     private PlayerInputReciever inputs;
-    private DoorHandle currentDoor;
+    private IInteractable curInteract;
+    bool canInteract = true;
 
     private void Start()
     {
@@ -25,30 +27,28 @@ public class PlayerInteractionHandler : MonoBehaviour
     {
         // Raycast from camera center forward
         Ray ray = new Ray(mainCam.transform.position, mainCam.transform.forward);
-        RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, interactRange, interactableMask))
+        if (Physics.SphereCast(ray, interactThreshold, out var hit,  interactRange, interactableMask))
         {
-            DoorHandle door = hit.collider.GetComponentInParent<DoorHandle>();
+            IInteractable interactable = hit.collider.GetComponentInParent<IInteractable>();
 
-            if (door != null)
+            if (interactable != null)
             {
                 // If we hit a new door, clear the old one
-                if (currentDoor != door)
+                if (curInteract != interactable)
                 {
-                    ClearCurrentDoor();
-                    currentDoor = door;
+                    ClearCurrentInteract();
+                    curInteract = interactable;
                 }
 
-                currentDoor.isInteractAvailable = true;
+                curInteract.isInteractAvailable = true;
                 return;
             }
         }
 
         // If we didn't hit a door, clear the old one
-        ClearCurrentDoor();
+        ClearCurrentInteract();
     }
-    bool canInteract = true;
     private void HandleInteraction()
     {
         // Poll input from your PlayerInputReciever
@@ -56,9 +56,9 @@ public class PlayerInteractionHandler : MonoBehaviour
         {
             canInteract = false;
 
-            if (currentDoor != null)
+            if (curInteract != null)
             {
-                currentDoor.TryInteract();
+                curInteract.TryInteract();
             }
 
             Invoke(nameof(ResetCanInteract), 1.0f);
@@ -70,12 +70,12 @@ public class PlayerInteractionHandler : MonoBehaviour
         canInteract = true;
     }
 
-    private void ClearCurrentDoor()
+    private void ClearCurrentInteract()
     {
-        if (currentDoor != null)
+        if (curInteract != null)
         {
-            currentDoor.isInteractAvailable = false;
-            currentDoor = null;
+            curInteract.isInteractAvailable = false;
+            curInteract = null;
         }
     }
 }

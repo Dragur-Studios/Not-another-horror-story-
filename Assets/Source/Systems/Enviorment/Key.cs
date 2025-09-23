@@ -1,16 +1,20 @@
+using System;
 using UnityEngine;
 
-public class Key : MonoBehaviour
+public class Key : IItem
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
-        
+        guid = $"key_{simple_guid()}";
+
+        OnInteract += () =>
+        {
+            GameManager.Singleton.Player.PickUp(this);
+        };
     }
 
-    // Update is called once per frame
-    void Update()
+    string simple_guid()
     {
-        
+        return Guid.NewGuid().ToString();
     }
 }
