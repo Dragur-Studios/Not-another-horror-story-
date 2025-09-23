@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class IInteractable : MonoBehaviour {
 
-    [SerializeField] GameObject Icon;
+    //[SerializeField] GameObject Icon;
 
     public Action OnInteract;
 
@@ -26,7 +26,7 @@ public class IInteractable : MonoBehaviour {
     }
     private void Update()
     {
-        Icon?.SetActive(isInteractAvailable);
+        //Icon?.SetActive(isInteractAvailable);
     }
 
 }

@@ -4,17 +4,28 @@ public class SyncTransform : MonoBehaviour
 {
     [SerializeField] Transform target;
 
+    [SerializeField] bool syncRotation = true;
+    [SerializeField] bool syncPosition = true;
 
-
+    void SyncPosition()
+    {
+        if (syncPosition)
+            transform.position = target.position;
+    }
+    void SyncRotation()
+    {
+        if (syncRotation)
+            transform.rotation = target.rotation;
+    }
     void Start()
     {
-        transform.position = target.position;
-        transform.rotation = target.rotation;
+        SyncPosition();
+        SyncRotation();
     }
 
     void Update()
     {
-        transform.position = target.position;
-        transform.rotation = target.rotation;
+        SyncPosition();
+        SyncRotation();
     }
 }

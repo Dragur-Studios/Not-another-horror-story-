@@ -28,6 +28,7 @@ public class PlayerMovementResolver : MonoBehaviour
     [SerializeField] float runAnimSpeed = 1.0f;
     [SerializeField] float sprintAnimSpeed = 1.5f;
     [SerializeField] float holdTimeToRun = 1.0f;
+    [SerializeField, Range(0.1f, 0.5f)] float crouchTimeout = 0.3f;
     public float CurrentVelocity => currentVelocity;
     public Vector2 CurrentHV { get; private set; }
 
@@ -79,7 +80,7 @@ public class PlayerMovementResolver : MonoBehaviour
         {
             canToggleCrouchMode = false;
             isCrouching = !isCrouching;
-            Invoke(nameof(ResetCanToggleCrouchMode), 1.0f);
+            Invoke(nameof(ResetCanToggleCrouchMode), crouchTimeout);
         }
 
         if (isCrouching)
